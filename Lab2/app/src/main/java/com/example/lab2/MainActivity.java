@@ -3,18 +3,27 @@ package com.example.lab2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.view.Menu;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TEXT_VIEW_KEY = "";
     ListView listView;
     TextView textView;
+    private static final String FILE_NAME="example.txt";
+
+    EditText mEditText;
 
     // some transient state for the activity instance
     String gameState;
@@ -66,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mEditText = findViewById(R.id.editText);
+
 
     }
 
@@ -85,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.item3:
                 openHelp();
                 return true;
+            case R.id.item4:
+                openSettings();
+                return true;
              default:
                  return super.onOptionsItemSelected(item);
         }
@@ -95,7 +112,66 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openSettings(){
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
 
+    public void save(View view){
+        String text = mEditText.getText().toString();
+        FileOutputStream fos = null;
+        try {
+            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
+            fos.write(text.getBytes());
+
+            mEditText.getText().clear();
+            Toast.makeText(this,"Saved to" + getFilesDir() + "/" + FILE_NAME, Toast.LENGTH_LONG).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null){
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    public void load(View view){
+        FileInputStream fis = null;
+        try {
+            fis = openFileInput(FILE_NAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+
+            while((text = br.readLine()) != null){
+                sb.append(text).append("\n");
+            }
+
+            mEditText.setText(sb.toString());
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null){
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
 
 
     //////////////////////////////////////////////////////////////////

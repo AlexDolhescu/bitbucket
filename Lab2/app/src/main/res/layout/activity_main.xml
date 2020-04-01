@@ -6,44 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ListView
-        android:id="@+id/listview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-        android:layout_marginStart="180dp" />
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@id/listview" />
-
     <Button
-        android:id="@+id/button_save"
-        android:layout_width="wrap_content"
+        android:id="@+id/button_listview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:text="Save"
-        android:onClick="save" />
+        android:text="ListView" />
 
     <Button
-        android:id="@+id/button_load"
-        android:layout_width="wrap_content"
+        android:id="@+id/button_saveload"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/button_save"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:text="Load"
-        android:onClick="load" />
+        android:layout_below="@id/button_listview"
+        android:text="SaveLoad" />
+
+    <Button
+        android:id="@+id/button_sensors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_saveload"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="Sensors" />
+
+    <Button
+        android:id="@+id/button_gps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_sensors"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="GPS" />
 
 
 

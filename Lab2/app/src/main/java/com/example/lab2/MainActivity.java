@@ -12,8 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.view.Menu;
 import android.widget.Toast;
@@ -29,14 +29,9 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private static final String GAME_STATE_KEY = "";
-    private static final String TEXT_VIEW_KEY = "";
-    ListView listView;
-    TextView textView;
-    private static final String FILE_NAME="example.txt";
 
-    EditText mEditText;
 
-    // some transient state for the activity instance
+
     String gameState;
 
     @Override
@@ -46,43 +41,64 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             gameState = savedInstanceState.getString(GAME_STATE_KEY);
         }
+
         setContentView(R.layout.activity_main);
 
-        textView = (TextView) findViewById(R.id.textView);
 
 
-        listView = (ListView) findViewById(R.id.listview);
+        Button listview = findViewById(R.id.button_listview);
+        Button saveload = findViewById(R.id.button_saveload);
+        Button sensors = findViewById(R.id.button_sensors);
+        Button GPS = findViewById(R.id.button_gps);
 
-        ArrayList<String> arrayList = new ArrayList<>();
-        final ArrayList<String> infoList = new ArrayList<>();
-
-        arrayList.add("VW");
-        infoList.add("VW power");
-        arrayList.add("BMW");
-        infoList.add("BMW power");
-        arrayList.add("Audi");
-        infoList.add("Audi power");
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
-
-        listView.setAdapter(arrayAdapter);
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listview.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                TextView textView = (TextView) findViewById(R.id.textView);
-                textView.setText(infoList.get(position));
-
+            public void onClick(View v) {
+                openList();
             }
         });
 
-        mEditText = findViewById(R.id.editText);
+        saveload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSaveLoad();
+            }
+        });
+
+        sensors.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSensors();
+            }
+        });
+        GPS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGps();
+            }
+        });
 
 
     }
+    public void openList(){
+        Intent intent = new Intent(this, ListView.class);
+        startActivity(intent);
+    }
 
+    public void openSaveLoad(){
+        Intent intent = new Intent(this, SaveLoad.class);
+        startActivity(intent);
+    }
+
+     public void openSensors(){
+         Intent intent = new Intent(this, Sensors.class);
+         startActivity(intent);
+     }
+
+    public void openGps(){
+        Intent intent = new Intent(this, GPS.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -117,114 +133,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void save(View view){
-        String text = mEditText.getText().toString();
-        FileOutputStream fos = null;
-        try {
-            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
-            fos.write(text.getBytes());
 
-            mEditText.getText().clear();
-            Toast.makeText(this,"Saved to" + getFilesDir() + "/" + FILE_NAME, Toast.LENGTH_LONG).show();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fos != null){
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-    }
-
-    public void load(View view){
-        FileInputStream fis = null;
-        try {
-            fis = openFileInput(FILE_NAME);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            String text;
-
-            while((text = br.readLine()) != null){
-                sb.append(text).append("\n");
-            }
-
-            mEditText.setText(sb.toString());
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fis != null){
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-    }
 
 
     //////////////////////////////////////////////////////////////////
 
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        textView.setText(savedInstanceState.getString(TEXT_VIEW_KEY));
-    }
 
-    // invoked when the activity may be temporarily destroyed, save the instance state here
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        TextView text=findViewById(R.id.textView);
-        outState.putString(TEXT_VIEW_KEY, text.getText().toString());
-        // call superclass to save any view hierarchy
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d("a","start");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d("a","restart");
-    }
-
-    @Override
-    protected void onResume() {
-        Log.d("a","Resume");
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        Log.d("a","pause");
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        Log.d("a","stop");
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.d("a","destroy");
-        super.onDestroy();
-    }
 
 
 }

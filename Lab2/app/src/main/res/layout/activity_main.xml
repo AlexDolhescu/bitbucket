@@ -41,6 +41,14 @@
         android:layout_marginTop="15dp"
         android:text="GPS" />
 
+    <Button
+        android:id="@+id/button_camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_gps"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="Camera" />
 
 
 

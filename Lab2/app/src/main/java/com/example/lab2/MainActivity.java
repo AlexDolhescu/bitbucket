@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         Button saveload = findViewById(R.id.button_saveload);
         Button sensors = findViewById(R.id.button_sensors);
         Button GPS = findViewById(R.id.button_gps);
+        Button Camera = findViewById(R.id.button_camera);
 
         listview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,10 +72,18 @@ public class MainActivity extends AppCompatActivity {
                 openSensors();
             }
         });
+
         GPS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openGps();
+            }
+        });
+
+        Camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCamera();
             }
         });
 
@@ -97,6 +106,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openGps(){
         Intent intent = new Intent(this, GPS.class);
+        startActivity(intent);
+    }
+
+    public void openCamera(){
+        Intent intent = new Intent(this, Camera.class);
         startActivity(intent);
     }
 

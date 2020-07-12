@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Note">
+
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="B"
+        android:textStyle="bold"
+        android:id="@+id/boldtext"
+        android:onClick="onClick"
+        />
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:layout_toRightOf="@+id/boldtext"
+        android:text="I"
+        android:id="@+id/italictext"
+        android:onClick="onClick"
+        />
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:text="N"
+        android:layout_toRightOf="@+id/italictext"
+        android:id="@+id/normaltext"
+        android:onClick="onClick"
+        />
+    <Button
+        android:layout_height="wrap_content"
+        android:text="Size"
+        android:layout_width="wrap_content"
+        android:id="@+id/fontsize"
+        android:layout_toRightOf="@+id/normaltext"
+        />
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/fontsize"
+        android:text="save" />
+
+    <MultiAutoCompleteTextView
+        android:id="@+id/mainpart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/boldtext"
+        android:hint="Welcome to AndroidPad"
+        android:layout_marginTop="15dp"
+        android:inputType="textMultiLine" />
+
+
+</RelativeLayout >
